@@ -1,6 +1,9 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 
+// Exact ease-in-out-sine easing curve matching learnquraan.co.uk (AOS.init({easing: "ease-in-out-sine"}))
+const EASING_LEARNQURAN = [0.445, 0.05, 0.55, 0.95] as const;
+
 interface AnimatedSectionProps {
   children: React.ReactNode;
   className?: string;
@@ -10,6 +13,8 @@ interface AnimatedSectionProps {
   tag?: 'section' | 'div';
   id?: string;
   once?: boolean;
+  disableMobileAnimation?: boolean;
+  disableAnimation?: boolean;
 }
 
 export const AnimatedSection: React.FC<AnimatedSectionProps> = ({
@@ -20,13 +25,15 @@ export const AnimatedSection: React.FC<AnimatedSectionProps> = ({
   animation,
   tag = 'section',
   id,
-  once = false,
+  once = true,
+  disableAnimation = false,
 }) => {
   const shouldReduceMotion = useReducedMotion();
   const activeVariant = animation || variant || 'fadeUp';
+  const isDisabled = disableAnimation || shouldReduceMotion;
 
   const getVariants = () => {
-    if (shouldReduceMotion) {
+    if (isDisabled) {
       return {
         hidden: { opacity: 1, y: 0, scale: 1 },
         visible: { opacity: 1, y: 0, scale: 1 },
@@ -41,13 +48,13 @@ export const AnimatedSection: React.FC<AnimatedSectionProps> = ({
         };
       case 'scaleUp':
         return {
-          hidden: { opacity: 0, scale: 0.97 },
+          hidden: { opacity: 0, scale: 0.96 },
           visible: { opacity: 1, scale: 1 },
         };
       case 'fadeUp':
       default:
         return {
-          hidden: { opacity: 0, y: 22 },
+          hidden: { opacity: 0, y: 26 },
           visible: { opacity: 1, y: 0 },
         };
     }
@@ -58,16 +65,16 @@ export const AnimatedSection: React.FC<AnimatedSectionProps> = ({
   return (
     <Component
       id={id}
-      initial="hidden"
+      initial={isDisabled ? 'visible' : 'hidden'}
       whileInView="visible"
-      viewport={{ once, amount: 0.12, margin: '-20px' }}
+      viewport={{ once, amount: 0.08, margin: '0px 0px -30px 0px' }}
       variants={getVariants()}
       transition={{
-        duration: 0.48,
-        delay,
-        ease: [0.16, 1, 0.3, 1],
+        duration: isDisabled ? 0 : 0.55,
+        delay: isDisabled ? 0 : delay,
+        ease: EASING_LEARNQURAN,
       }}
-      className={className}
+      className={className.trim()}
     >
       {children}
     </Component>
@@ -81,6 +88,8 @@ export interface AnimatedItemProps {
   index?: number;
   once?: boolean;
   animation?: 'fadeUp' | 'fadeIn' | 'scale' | 'slideUp';
+  disableMobileAnimation?: boolean;
+  disableAnimation?: boolean;
 }
 
 export const AnimatedItem: React.FC<AnimatedItemProps> = ({
@@ -88,29 +97,31 @@ export const AnimatedItem: React.FC<AnimatedItemProps> = ({
   className = '',
   delay,
   index,
-  once = false,
+  once = true,
   animation = 'fadeUp',
+  disableAnimation = false,
 }) => {
   const shouldReduceMotion = useReducedMotion();
+  const isDisabled = disableAnimation || shouldReduceMotion;
   const computedDelay =
-    delay !== undefined ? delay : index !== undefined ? Math.min(index * 0.05, 0.35) : 0;
+    delay !== undefined ? delay : index !== undefined ? Math.min(index * 0.06, 0.3) : 0;
 
   const getInitial = () => {
-    if (shouldReduceMotion) return { opacity: 1, y: 0, scale: 1 };
+    if (isDisabled) return { opacity: 1, y: 0, scale: 1 };
     switch (animation) {
       case 'fadeIn':
         return { opacity: 0 };
       case 'scale':
-        return { opacity: 0, scale: 0.94 };
+        return { opacity: 0, scale: 0.95 };
       case 'slideUp':
       case 'fadeUp':
       default:
-        return { opacity: 0, y: 16 };
+        return { opacity: 0, y: 22 };
     }
   };
 
   const getAnimate = () => {
-    if (shouldReduceMotion) return { opacity: 1, y: 0, scale: 1 };
+    if (isDisabled) return { opacity: 1, y: 0, scale: 1 };
     switch (animation) {
       case 'fadeIn':
         return { opacity: 1 };
@@ -127,13 +138,13 @@ export const AnimatedItem: React.FC<AnimatedItemProps> = ({
     <motion.div
       initial={getInitial()}
       whileInView={getAnimate()}
-      viewport={{ once, amount: 0.12, margin: '-15px' }}
+      viewport={{ once, amount: 0.08, margin: '0px 0px -20px 0px' }}
       transition={{
-        duration: 0.42,
-        delay: computedDelay,
-        ease: [0.16, 1, 0.3, 1],
+        duration: isDisabled ? 0 : 0.48,
+        delay: isDisabled ? 0 : computedDelay,
+        ease: EASING_LEARNQURAN,
       }}
-      className={className}
+      className={className.trim()}
     >
       {children}
     </motion.div>
@@ -153,21 +164,21 @@ export const AnimatedText: React.FC<{
   delay = 0,
   direction = 'up',
   as = 'div',
-  once = false,
+  once = true,
 }) => {
   const shouldReduceMotion = useReducedMotion();
-  const yOffset = direction === 'up' ? 16 : direction === 'down' ? -16 : 0;
+  const yOffset = direction === 'up' ? 18 : direction === 'down' ? -18 : 0;
   const Component = (motion as unknown as Record<string, React.ElementType>)[as] || motion.div;
 
   return (
     <Component
       initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: yOffset }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once, amount: 0.12, margin: '-15px' }}
+      viewport={{ once, amount: 0.08, margin: '0px 0px -20px 0px' }}
       transition={{
-        duration: 0.42,
+        duration: 0.5,
         delay,
-        ease: [0.16, 1, 0.3, 1],
+        ease: EASING_LEARNQURAN,
       }}
       className={className}
     >
@@ -182,7 +193,7 @@ export const AnimatedWords: React.FC<{
   wordClassName?: string;
   delay?: number;
   once?: boolean;
-}> = ({ text, className = '', wordClassName = '', delay = 0, once = false }) => {
+}> = ({ text, className = '', wordClassName = '', delay = 0, once = true }) => {
   const shouldReduceMotion = useReducedMotion();
   const words = text.split(' ');
 
@@ -194,7 +205,7 @@ export const AnimatedWords: React.FC<{
     <motion.span
       initial="hidden"
       whileInView="visible"
-      viewport={{ once, amount: 0.12, margin: '-15px' }}
+      viewport={{ once, amount: 0.08, margin: '0px 0px -20px 0px' }}
       transition={{ staggerChildren: 0.02, delayChildren: delay }}
       className={`inline-block ${className}`}
     >
@@ -206,7 +217,7 @@ export const AnimatedWords: React.FC<{
             visible: {
               opacity: 1,
               y: 0,
-              transition: { duration: 0.32, ease: [0.16, 1, 0.3, 1] },
+              transition: { duration: 0.35, ease: EASING_LEARNQURAN },
             },
           }}
           className={`inline-block mr-[0.28em] last:mr-0 ${wordClassName}`}
@@ -217,4 +228,3 @@ export const AnimatedWords: React.FC<{
     </motion.span>
   );
 };
-

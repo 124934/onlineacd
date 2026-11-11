@@ -145,7 +145,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenEnroll }) => {
   };
 
   return (
-    <footer className="w-full relative mt-6 text-white selection:bg-[#0A3826] selection:text-white bg-transparent">
+    <footer
+      className="w-full relative mt-6 text-white selection:bg-[#0A3826] selection:text-white bg-transparent no-trans"
+      data-no-trans="true"
+    >
       {/* ======================================================== */}
       {/* DESKTOP FOOTER (Unchanged, exactly as originally styled) */}
       {/* ======================================================== */}
@@ -170,6 +173,14 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenEnroll }) => {
           <path
             d="M0,170 C140,95 230,0 330,0 C460,0 860,70 1440,135 L1440,440 L0,440 Z"
             fill="#032918"
+          />
+
+          {/* Top Yellow Boundary / Islamic Architectural Arch Trim Line (matching mobile view) */}
+          <path
+            d="M0,172 C140,97 230,2 330,2 C460,2 860,72 1440,137"
+            stroke="#FCB205"
+            strokeWidth="2.5"
+            strokeLinecap="round"
           />
 
           {/* Bottom Islamic Architectural Arch Trim Line */}

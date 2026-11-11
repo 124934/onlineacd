@@ -37,16 +37,21 @@ export const TestimonialsPage: React.FC<TestimonialsPageProps> = ({
       </AnimatedSection>
 
       {/* Reviews Grid */}
-      <AnimatedSection variant="fadeUp" className="relative py-20 bg-white/40">
+      <AnimatedSection
+        disableAnimation={true}
+        className="relative py-20 bg-white/40 testimonials-section no-trans"
+        data-no-trans="true"
+      >
         <IslamicPattern variant="subtle" opacity={0.02} patternType="girih" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
-            {testimonials.map((review, idx) => (
+            {testimonials.map((review) => (
               <AnimatedItem
                 key={review.id}
-                delay={(idx % 3) * 0.08}
-                className="bg-white/92 backdrop-blur-sm p-7 rounded-3xl border border-slate-200/90 shadow-xs lq-card-hover flex flex-col justify-between group"
+                disableAnimation={true}
+                className="bg-white/92 backdrop-blur-sm p-7 rounded-3xl border border-slate-200/90 shadow-xs flex flex-col justify-between group no-trans"
+                data-no-trans="true"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">

@@ -5,6 +5,7 @@ import {
   ArrowRight,
   Award,
   CheckCircle,
+  CheckCircle2,
   Star,
   Quote,
 } from 'lucide-react';
@@ -36,9 +37,9 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenEnroll }) 
     return () => clearInterval(timer);
   }, [sliderTestimonials.length]);
 
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState(1);
 
-  // 3 Distinct Slides with 2 different children per slide
+  // 3 Distinct Slides with 2 different children per slide matching reference design exactly
   const heroSlides = [
     {
       id: 1,
@@ -50,9 +51,9 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenEnroll }) 
     {
       id: 2,
       leftImage: '/assets/images/boy_holding_quran_1792430342987.jpg',
-      leftAlt: 'Young student holding Holy Quran with devotion',
+      leftAlt: 'Young boy student holding Holy Quran with devotion',
       rightImage: '/assets/images/girl_teal_hijab_1792430343468.jpg',
-      rightAlt: 'Young female student in teal hijab learning Quran',
+      rightAlt: 'Young female student in teal hijab reciting Quran on rehal',
     },
     {
       id: 3,
@@ -117,56 +118,36 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenEnroll }) 
       {/* Home Page – Hero Section */}
       <section className="relative w-full bg-transparent overflow-hidden">
         
-        {/* Desktop Golden Curved Background on Left with Smooth Horizontal Gradient and Completely Round End */}
-        <motion.div
-          initial={{ x: -120, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="absolute top-0 left-0 bottom-0 w-full lg:w-[48%] xl:w-[46%] pointer-events-none hidden lg:block overflow-hidden z-0"
-        >
+        {/* Desktop Golden Curved Background on Left */}
+        <div className="absolute top-0 left-0 bottom-0 w-[52%] xl:w-[49%] 2xl:w-[46%] max-w-[950px] pointer-events-none hidden lg:block z-0 overflow-hidden">
           <svg
             className="w-full h-full"
-            viewBox="0 0 560 680"
+            viewBox="0 0 850 720"
             preserveAspectRatio="none"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
             <defs>
-              {/* Smooth horizontal gradient matching official logo amber/gold #FCB205 */}
-              <linearGradient id="heroGoldGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#FCB205">
-                  <animate attributeName="stopColor" values="#FCB205;#FDBF2A;#FCB205" dur="7s" repeatCount="indefinite" />
-                </stop>
-                <stop offset="50%" stopColor="#FDBF2A">
-                  <animate attributeName="offset" values="0.50;0.62;0.50" dur="7s" repeatCount="indefinite" />
-                </stop>
-                <stop offset="85%" stopColor="#FCB205" />
-                <stop offset="97%" stopColor="#FAF8F5" stopOpacity="0.85" />
-                <stop offset="100%" stopColor="#FAF9F5" stopOpacity="0" />
-              </linearGradient>
-
-              {/* Completely Round End Curve (Smooth Semi-circular Arc) */}
-              <clipPath id="yellowCurveSilhouette">
-                <path d="M 0,0 L 320,0 C 560,0 560,680 320,680 L 0,680 Z" />
-              </clipPath>
+              <filter id="heroGoldSoftGlow" x="-25%" y="-25%" width="150%" height="150%">
+                <feGaussianBlur stdDeviation="24" result="blur" />
+              </filter>
             </defs>
 
-            {/* Secondary Soft Translucent Rim behind round curve for smooth blend */}
+            {/* Soft Ambient Golden Halo Outer Edge */}
             <path
-              d="M 0,0 L 340,0 C 585,0 585,680 340,680 L 0,680 Z"
-              fill="#F4EFE6"
-              opacity="0.65"
+              d="M 0,0 L 460,0 C 660,40 780,210 770,360 C 760,520 640,650 390,720 L 0,720 Z"
+              fill="#FDCE0D"
+              fillOpacity="0.45"
+              filter="url(#heroGoldSoftGlow)"
             />
 
-            {/* Main Vibrant Gold Shape matching logo color */}
-            <g clipPath="url(#yellowCurveSilhouette)">
-              <path
-                d="M 0,0 L 320,0 C 560,0 560,680 320,680 L 0,680 Z"
-                fill="url(#heroGoldGradient)"
-              />
-            </g>
+            {/* Primary Solid Vibrant Golden Shape */}
+            <path
+              d="M 0,0 L 430,0 C 630,40 750,210 740,360 C 730,520 610,650 360,720 L 0,720 Z"
+              fill="#FDCE0D"
+            />
           </svg>
-        </motion.div>
+        </div>
 
         {/* Mobile Bismillah between Header and Slider */}
         <div className="block lg:hidden w-full text-center pt-4 pb-2 px-4 select-none z-20 relative">
@@ -175,66 +156,59 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenEnroll }) 
           </div>
         </div>
 
-        {/* Hero Content Container */}
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8 lg:py-12 z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center">
+        {/* Hero Content Container matching Navbar max-width for perfect alignment */}
+        <div className="relative max-w-[1560px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-4 sm:py-8 lg:py-12 z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 xl:gap-12 items-center">
             
             {/* Left Side: Golden Panel with Automatic 3-Slide Quran Learning Carousel */}
-            <motion.div
-              initial={{ x: -140, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-              className="lg:col-span-5 relative flex justify-start items-center"
-            >
+            <div className="lg:col-span-5 relative flex flex-col justify-center items-center lg:items-start z-10 py-3 sm:py-5 lg:py-6 pl-0">
               {/* Mobile/Tablet Golden Card Wrapper */}
               <div className="w-full lg:contents">
-                <div className="rounded-[2.5rem] lg:rounded-none bg-gradient-to-r from-[#FCB205] via-[#FDBF2A] to-[#FCB205] animate-horizontal-gradient lg:bg-none p-5 sm:p-7 lg:p-0 text-white relative overflow-hidden shadow-lg lg:shadow-none">
+                <div className="rounded-[2.5rem] lg:rounded-none bg-[#FDCE0D] lg:bg-transparent p-5 sm:p-7 lg:p-0 text-white relative overflow-hidden shadow-lg lg:shadow-none">
                   
                   {/* Overlapping Rounded Student Quran Reading Cards with Automatic Slider */}
-                  <div className="relative z-20 flex flex-col items-center lg:items-start py-3 sm:py-5 lg:py-8 pl-0 sm:pl-2 w-full">
-                    <div className="relative h-[260px] sm:h-[320px] md:h-[350px] w-full flex items-end justify-center lg:justify-start">
+                  <div className="relative z-20 flex flex-col items-center lg:items-start w-full">
+                    <div className="relative w-full flex items-center justify-center lg:justify-start">
                       <AnimatePresence mode="wait">
                         <motion.div
                           key={currentSlide}
-                          initial={{ opacity: 0, x: 45 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          exit={{ opacity: 0, x: -45 }}
-                          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                          className="flex items-end justify-center lg:justify-start"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.5, ease: 'easeInOut' }}
+                          className="relative flex items-center justify-center lg:justify-start"
                         >
-                          {/* Background Student Card (Left) */}
-                          <div className="relative rounded-[2rem] overflow-hidden border-4 border-white/95 shadow-2xl w-36 sm:w-44 md:w-48 aspect-[3/4] bg-slate-800 shrink-0 -mr-8 sm:-mr-10 mb-2 z-10 transform -rotate-1 hover:rotate-0 transition-transform duration-300">
+                          {/* Background Student Card (Left) - Perfectly sized to never stick out of yellow shape */}
+                          <div className="relative rounded-[22px] sm:rounded-[26px] lg:rounded-[28px] overflow-hidden border-[4px] lg:border-[5px] border-white shadow-xl w-[155px] sm:w-[175px] md:w-[185px] lg:w-[195px] xl:w-[205px] h-[225px] sm:h-[250px] md:h-[270px] lg:h-[285px] xl:h-[300px] bg-slate-800 shrink-0 z-10 translate-y-3">
                             <img
                               src={heroSlides[currentSlide].leftImage}
                               alt={heroSlides[currentSlide].leftAlt}
                               className="w-full h-full object-cover"
                             />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                           </div>
 
-                          {/* Foreground Student Card (Right) */}
-                          <div className="relative rounded-[2.3rem] overflow-hidden border-4 border-white shadow-2xl w-48 sm:w-56 md:w-64 aspect-[3/4] bg-slate-900 shrink-0 z-20 transform hover:scale-[1.02] transition-transform duration-300">
+                          {/* Foreground Student Card (Right) - Perfectly sized to stay inside yellow shape */}
+                          <div className="relative rounded-[26px] sm:rounded-[30px] lg:rounded-[34px] overflow-hidden border-[5px] lg:border-[6px] border-white shadow-2xl w-[195px] sm:w-[225px] md:w-[240px] lg:w-[255px] xl:w-[270px] h-[280px] sm:h-[320px] md:h-[340px] lg:h-[365px] xl:h-[385px] bg-slate-900 shrink-0 z-20 -ml-14 sm:-ml-16 md:-ml-18 lg:-ml-20 xl:-ml-22 -translate-y-3">
                             <img
                               src={heroSlides[currentSlide].rightImage}
                               alt={heroSlides[currentSlide].rightAlt}
                               className="w-full h-full object-cover"
                             />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                           </div>
                         </motion.div>
                       </AnimatePresence>
                     </div>
 
-                    {/* Automatic Slide Indicators (3 Dots) */}
-                    <div className="flex items-center gap-2 mt-4 z-30 self-center lg:self-start lg:pl-10">
+                    {/* Automatic Slide Indicators (3 Dots) - Positioned directly under the left card */}
+                    <div className="w-[155px] sm:w-[175px] md:w-[185px] lg:w-[195px] xl:w-[205px] flex items-center justify-center gap-2 mt-4 z-30">
                       {heroSlides.map((slide, idx) => (
                         <button
                           key={slide.id}
                           onClick={() => setCurrentSlide(idx)}
                           className={`transition-all duration-300 rounded-full cursor-pointer ${
                             currentSlide === idx
-                              ? 'w-7 h-2 bg-[#0A3826] shadow-sm'
-                              : 'w-2 h-2 bg-slate-400/70 hover:bg-slate-700'
+                              ? 'w-6 h-2 bg-[#073A1F] shadow-xs'
+                              : 'w-2 h-2 bg-slate-400 hover:bg-slate-600'
                           }`}
                           aria-label={`Switch to slide ${idx + 1}`}
                         />
@@ -243,26 +217,26 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenEnroll }) 
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
             {/* Right Side: Clean Background with Bismillah, Title & CTA */}
-            <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left space-y-5 lg:pl-10 xl:pl-14 relative z-20">
+            <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left space-y-4 lg:space-y-5 lg:pl-6 xl:pl-10 relative z-20">
               
-              {/* Desktop Bismillah centered in the middle above Online Quran Academy */}
+              {/* Desktop Bismillah centered above Online Quran Academy */}
               <div className="hidden lg:flex w-full justify-center select-none">
-                <div className="font-arabic text-3xl md:text-4xl text-[#0A3826] font-bold tracking-wider leading-relaxed text-center">
+                <div className="font-arabic text-3xl md:text-4xl text-[#032918] font-bold tracking-wider leading-relaxed text-center">
                   بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
                 </div>
               </div>
 
-              {/* Main Heading: Online Quran Academy on single line, completely black on mobile, emerald & gold on desktop */}
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[50px] font-serif font-extrabold leading-[1.15] tracking-tight text-center lg:text-left whitespace-nowrap">
-                <span className="text-black lg:text-[#072C1E]">Online </span>
-                <span className="text-black lg:text-[#FCB205]">Quran Academy</span>
+              {/* Main Heading: Online Quran Academy exactly matching screenshot */}
+              <h1 className="text-3xl sm:text-4xl lg:text-[46px] xl:text-[52px] font-serif font-extrabold leading-[1.15] tracking-tight text-center lg:text-left whitespace-nowrap">
+                <span className="text-[#072C1E]">Online </span>
+                <span className="text-[#FCB205]">Quran Academy</span>
               </h1>
 
               {/* Premier International Islamic Online Academy Badge */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0A3826] text-[#FCB205] text-xs sm:text-sm font-bold shadow-md">
+              <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-[#032918] text-[#FCB205] text-xs sm:text-sm font-bold shadow-md">
                 <Sparkles className="w-4 h-4 text-[#FCB205] shrink-0" />
                 <span>Premier International Islamic Online Academy</span>
               </div>
@@ -271,9 +245,9 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenEnroll }) 
               <div className="pt-1 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 w-full sm:w-auto">
                 <button
                   onClick={() => onOpenEnroll()}
-                  className="w-full sm:w-auto group inline-flex items-center justify-center gap-2.5 px-7 py-3.5 bg-[#032918] hover:bg-[#072C1E] active:bg-[#021a0f] text-white rounded-xl text-sm sm:text-base font-bold uppercase tracking-wider transition-all duration-300 shadow-md hover:shadow-xl active:scale-95 cursor-pointer whitespace-nowrap border border-emerald-900/40 lq-btn lq-shimmer-btn"
+                  className="w-full sm:w-auto group inline-flex items-center justify-center gap-2.5 px-6 sm:px-7 py-3.5 bg-[#032918] hover:bg-[#072C1E] active:bg-[#021a0f] text-white rounded-xl text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-300 shadow-md hover:shadow-xl active:scale-95 cursor-pointer whitespace-nowrap border border-emerald-900/40 lq-btn lq-shimmer-btn"
                 >
-                  <span>Book 3-Day Free Trial</span>
+                  <span>BOOK 3-DAY FREE TRIAL</span>
                   <ArrowRight className="w-4 h-4 text-[#FCB205] group-hover:translate-x-1.5 transition-transform duration-300" />
                 </button>
 
@@ -281,7 +255,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenEnroll }) 
                   href={`${ACADEMY_CONFIG.whatsappUrl}?text=${encodeURIComponent(
                     'As-salamu alaykum! I would like to inquire about online Quran classes and book a 3-Day Free Trial.'
                   )}`}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#25D366] hover:bg-[#20BD5A] text-white rounded-xl text-sm sm:text-base font-bold transition-all duration-300 shadow-md hover:shadow-lg active:scale-95 whitespace-nowrap cursor-pointer lq-btn"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#25D366] hover:bg-[#20BD5A] text-white rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 shadow-md hover:shadow-lg active:scale-95 whitespace-nowrap cursor-pointer lq-btn"
                 >
                   <svg className="w-4 h-4 fill-white shrink-0" viewBox="0 0 24 24">
                     <path d="M12.031 2C6.496 2 2 6.496 2 12.031c0 1.97.57 3.807 1.558 5.36L2 22l4.75-1.523A9.97 9.97 0 0 0 12.031 22C17.566 22 22 17.566 22 12.031 22 6.496 17.566 2 12.031 2zm5.72 14.34c-.24.67-1.39 1.28-1.92 1.36-.51.08-1.17.11-3.79-.95-2.24-.9-3.69-3.17-3.8-3.32-.11-.15-.92-1.22-.92-2.33 0-1.11.58-1.65.79-1.88.2-.23.45-.29.6-.29.15 0 .3 0 .43.01.14.01.32-.05.5.39.18.44.62 1.52.68 1.63.06.11.1.25.02.4-.07.15-.11.24-.22.37-.11.13-.23.29-.33.39-.11.11-.23.23-.1.45.13.22.58.96 1.25 1.56.86.77 1.59 1.01 1.81 1.12.22.11.35.1.48-.05.13-.15.56-.65.71-.88.15-.22.3-.18.5-.11.2.07 1.29.61 1.51.72.22.11.37.17.43.26.05.1.05.58-.19 1.25z" />
@@ -290,22 +264,22 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenEnroll }) 
                 </a>
               </div>
 
-              {/* Key Features Section - 4 points in exact order, each in a separate row */}
+              {/* Key Features Section - 4 points in exact order matching reference design */}
               <div className="pt-2 flex flex-col items-center lg:items-start gap-2.5 text-xs sm:text-sm font-medium text-slate-700">
                 <div className="flex items-center gap-2 whitespace-nowrap hover:translate-x-1.5 transition-transform duration-300">
-                  <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                   <span>Cost-Effective</span>
                 </div>
                 <div className="flex items-center gap-2 whitespace-nowrap hover:translate-x-1.5 transition-transform duration-300">
-                  <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                   <span>Flexible 24/7 Hours</span>
                 </div>
                 <div className="flex items-center gap-2 whitespace-nowrap hover:translate-x-1.5 transition-transform duration-300">
-                  <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                   <span>1-on-1 Personalized Scholars</span>
                 </div>
                 <div className="flex items-center gap-2 whitespace-nowrap hover:translate-x-1.5 transition-transform duration-300">
-                  <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                   <span>Certified Male and Female Scholars</span>
                 </div>
               </div>
@@ -399,9 +373,10 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenEnroll }) 
         </div>
       </AnimatedSection>
 
-      {/* 4. Courses Section */}
+      {/* 4. Courses Section - Smooth scroll entrance & card transitions matching learnquraan.co.uk */}
       <AnimatedSection variant="fadeUp" className="relative py-10 sm:py-14 bg-transparent">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-8">
+          {/* Section Header */}
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-10 gap-4 text-left">
             <div>
               <span className="text-xs sm:text-sm font-bold text-[#FCB205] uppercase tracking-widest font-serif">
@@ -417,7 +392,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenEnroll }) 
 
             <a
               href="#/courses"
-              className="inline-flex items-center gap-1.5 text-sm font-bold text-[#0A3826] hover:text-[#072C1E] group cursor-pointer transition-colors"
+              className="group inline-flex items-center gap-1.5 text-sm font-bold text-[#0A3826] hover:text-[#072C1E] cursor-pointer transition-colors"
             >
               <span>View All Courses</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-300" />
@@ -430,6 +405,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenEnroll }) 
                 key={course.id}
                 delay={(idx % 3) * 0.08}
                 className="bg-white/92 backdrop-blur-sm rounded-3xl border border-slate-200/90 overflow-hidden shadow-xs lq-card-hover flex flex-col justify-between group"
+                data-course={course.id}
               >
                 <div className="p-6 sm:p-7">
                   <div className="flex items-center justify-between mb-3">
@@ -457,7 +433,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenEnroll }) 
                 <div className="px-6 pb-6 pt-2 flex items-center gap-2">
                   <a
                     href={`#/course/${course.slug || course.id}`}
-                    className="flex-1 py-2.5 px-3 bg-white hover:bg-slate-100 text-slate-700 text-xs sm:text-sm font-semibold rounded-xl border border-slate-300 text-center cursor-pointer lq-btn shadow-xs"
+                    className="flex-1 py-2.5 px-3 bg-white hover:bg-slate-100 text-slate-700 text-xs sm:text-sm font-semibold rounded-xl border border-slate-300 text-center cursor-pointer shadow-xs lq-btn"
                   >
                     View Details
                   </a>

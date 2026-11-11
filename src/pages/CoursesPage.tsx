@@ -78,10 +78,11 @@ export const CoursesPage: React.FC<CoursesPageProps> = ({ onNavigate, onOpenEnro
                 key={course.id}
                 delay={(idx % 3) * 0.08}
                 className="bg-white/92 backdrop-blur-sm rounded-3xl border border-slate-200/90 overflow-hidden shadow-xs lq-card-hover flex flex-col justify-between group"
+                data-course={course.id}
               >
                 <div className="p-7">
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-emerald-100 text-[#0A3826] group-hover:bg-emerald-200/80 transition-colors">
+                    <span className="text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-emerald-100 text-[#0A3826]">
                       {course.category}
                     </span>
                     <span className="text-xs font-bold text-[#FCB205] bg-[#FCB205]/15 px-2.5 py-0.5 rounded-md">
@@ -89,11 +90,11 @@ export const CoursesPage: React.FC<CoursesPageProps> = ({ onNavigate, onOpenEnro
                     </span>
                   </div>
 
-                  <div className="font-arabic text-xl text-[#0A3826] mb-1 font-semibold group-hover:scale-102 transition-transform duration-300 origin-left">
+                  <div className="font-arabic text-xl text-[#0A3826] mb-1 font-semibold">
                     {course.arabicTitle}
                   </div>
 
-                  <h3 className="text-xl font-serif font-bold text-[#072C1E] mb-2.5 group-hover:text-emerald-950 transition-colors">
+                  <h3 className="text-xl font-serif font-bold text-[#072C1E] mb-2.5">
                     {course.title}
                   </h3>
 
@@ -107,7 +108,7 @@ export const CoursesPage: React.FC<CoursesPageProps> = ({ onNavigate, onOpenEnro
                     </h5>
                     <ul className="space-y-1.5 text-xs text-slate-600">
                       {course.whatYouWillLearn.slice(0, 3).map((item, i) => (
-                        <li key={i} className="flex items-start gap-2 hover:translate-x-1 transition-transform duration-200">
+                        <li key={i} className="flex items-start gap-2">
                           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
                           <span className="line-clamp-2">{item}</span>
                         </li>
@@ -119,14 +120,14 @@ export const CoursesPage: React.FC<CoursesPageProps> = ({ onNavigate, onOpenEnro
                 <div className="px-7 pb-7 pt-2 flex items-center gap-3">
                   <a
                     href={`#/course/${course.slug || course.id}`}
-                    className="flex-1 py-3 px-3 bg-white hover:bg-slate-100 text-slate-700 text-xs font-bold rounded-xl border border-slate-300 text-center cursor-pointer shadow-xs lq-btn"
+                    className="flex-1 py-3 px-3 bg-white text-slate-700 text-xs font-bold rounded-xl border border-slate-300 text-center cursor-pointer shadow-xs"
                   >
                     Full Syllabus
                   </a>
 
                   <button
                     onClick={() => onOpenEnroll(course.id)}
-                    className="flex-1 py-3 px-3 bg-[#032918] hover:bg-[#072C1E] active:bg-[#021a0f] text-white text-xs font-bold uppercase tracking-wider rounded-xl text-center cursor-pointer shadow-md border border-emerald-900/40 lq-btn lq-shimmer-btn"
+                    className="flex-1 py-3 px-3 bg-[#032918] text-white text-xs font-bold uppercase tracking-wider rounded-xl text-center cursor-pointer shadow-md border border-emerald-900/40"
                   >
                     Enroll Now
                   </button>

@@ -30,12 +30,20 @@ export const CourseDetailPage: React.FC<CourseDetailPageProps> = ({
   const course =
     courses.find((c) => c.slug === courseSlug || c.id === courseSlug) || courses[0];
 
+  const isAdvanced =
+    course.id === 'advanced-islamic-studies' || course.slug === 'advanced-islamic-studies';
+
   const toggleFaq = (idx: number) => {
     setOpenFaqIdx(openFaqIdx === idx ? null : idx);
   };
 
   return (
-    <div className="w-full relative overflow-hidden text-slate-800">
+    <div
+      data-course={course.id}
+      className={`w-full relative overflow-hidden text-slate-800 ${
+        isAdvanced ? 'no-trans-advanced' : ''
+      }`}
+    >
       {/* Course Header Banner */}
       <section className="relative pt-8 pb-16 bg-gradient-to-b from-white/60 via-[#FAF8F5]/40 to-white/60 border-b border-slate-200/60 backdrop-blur-[2px]">
         <IslamicPattern variant="light" opacity={0.04} patternType="star8" />
@@ -60,7 +68,7 @@ export const CourseDetailPage: React.FC<CourseDetailPageProps> = ({
             <span className="font-semibold text-slate-700">{course.title}</span>
           </div>
 
-          <AnimatedSection animation="fadeUp" className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <AnimatedSection animation="fadeUp" disableAnimation={isAdvanced} className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             <div className="lg:col-span-8 space-y-4">
               <div className="flex flex-wrap items-center gap-2">
                 <span className="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-emerald-100 text-[#0A3826]">
@@ -153,7 +161,7 @@ export const CourseDetailPage: React.FC<CourseDetailPageProps> = ({
 
         <div className="relative max-w-5xl mx-auto px-4 sm:px-8 space-y-16 text-left">
           {/* Target Audience */}
-          <AnimatedSection animation="fadeUp">
+          <AnimatedSection animation="fadeUp" disableAnimation={isAdvanced}>
             <div className="p-6 rounded-2xl bg-white/85 backdrop-blur-sm border border-slate-200 lq-card-hover">
               <h3 className="text-base font-serif font-bold text-[#072C1E] mb-2 flex items-center gap-2">
                 <Award className="w-5 h-5 text-[#C5A059]" />
@@ -166,7 +174,7 @@ export const CourseDetailPage: React.FC<CourseDetailPageProps> = ({
           </AnimatedSection>
 
           {/* What You Will Learn */}
-          <AnimatedSection animation="fadeUp">
+          <AnimatedSection animation="fadeUp" disableAnimation={isAdvanced}>
             <h3 className="text-2xl font-serif font-bold text-[#072C1E] mb-6">
               What You Will Learn in This Course
             </h3>
@@ -175,6 +183,7 @@ export const CourseDetailPage: React.FC<CourseDetailPageProps> = ({
                 <AnimatedItem
                   key={idx}
                   index={idx}
+                  disableAnimation={isAdvanced}
                   className="flex items-start gap-3 p-4 rounded-xl bg-white/85 backdrop-blur-sm border border-slate-200/80 shadow-xs lq-card-hover"
                 >
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
@@ -187,7 +196,7 @@ export const CourseDetailPage: React.FC<CourseDetailPageProps> = ({
           </AnimatedSection>
 
           {/* Expected Outcomes */}
-          <AnimatedSection animation="fadeUp">
+          <AnimatedSection animation="fadeUp" disableAnimation={isAdvanced}>
             <h3 className="text-2xl font-serif font-bold text-[#072C1E] mb-6">
               Measurable Learning Outcomes
             </h3>
@@ -196,6 +205,7 @@ export const CourseDetailPage: React.FC<CourseDetailPageProps> = ({
                 <AnimatedItem
                   key={idx}
                   index={idx}
+                  disableAnimation={isAdvanced}
                   className="flex items-start gap-3 p-4 rounded-xl bg-white/85 backdrop-blur-sm border border-emerald-100/90 shadow-xs lq-card-hover group"
                 >
                   <span className="w-6 h-6 rounded-full bg-emerald-200/70 text-[#0A3826] flex items-center justify-center font-bold text-xs shrink-0 group-hover:bg-[#0A3826] group-hover:text-white transition-colors">
@@ -211,7 +221,7 @@ export const CourseDetailPage: React.FC<CourseDetailPageProps> = ({
 
           {/* Course FAQs if any */}
           {course.faqs && course.faqs.length > 0 && (
-            <AnimatedSection animation="fadeUp">
+            <AnimatedSection animation="fadeUp" disableAnimation={isAdvanced}>
               <h3 className="text-2xl font-serif font-bold text-[#072C1E] mb-6">
                 Course Specific Questions
               </h3>
@@ -260,7 +270,7 @@ export const CourseDetailPage: React.FC<CourseDetailPageProps> = ({
           )}
 
           {/* Bottom CTA Box */}
-          <AnimatedSection animation="scaleUp">
+          <AnimatedSection animation="scaleUp" disableAnimation={isAdvanced}>
             <div className="p-8 sm:p-10 rounded-3xl bg-[#072C1E] text-white text-center space-y-4 relative overflow-hidden lq-card-hover">
               <IslamicPattern variant="dark" opacity={0.08} />
               <h3 className="text-2xl font-serif font-bold text-white">

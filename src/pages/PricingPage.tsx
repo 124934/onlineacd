@@ -72,7 +72,11 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate, onOpenEnro
       </AnimatedSection>
 
       {/* Pricing Cards Grid */}
-      <AnimatedSection variant="fadeUp" className="relative py-20 bg-white/40">
+      <AnimatedSection
+        disableAnimation={true}
+        className="relative py-20 bg-white/40 packages-section no-trans"
+        data-no-trans="true"
+      >
         <IslamicPattern variant="subtle" opacity={0.02} patternType="girih" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-8">
@@ -82,12 +86,13 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate, onOpenEnro
               return (
                 <AnimatedItem
                   key={plan.id}
-                  delay={idx * 0.08}
-                  className={`relative rounded-3xl p-7 flex flex-col justify-between lq-card-hover ${
+                  disableAnimation={true}
+                  className={`relative rounded-3xl p-7 flex flex-col justify-between no-trans ${
                     isPopular
-                      ? 'bg-[#072C1E] text-white shadow-2xl scale-102 lg:-translate-y-2 border-2 border-[#FCB205]'
+                      ? 'bg-[#072C1E] text-white shadow-2xl border-2 border-[#FCB205]'
                       : 'bg-white/92 backdrop-blur-sm text-slate-800 border border-slate-200/90 shadow-xs'
                   }`}
+                  data-no-trans="true"
                 >
                   {isPopular && (
                     <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-[#FCB205] to-[#E5BE1D] text-slate-900 font-extrabold text-[10px] tracking-widest uppercase shadow-md whitespace-nowrap animate-lq-pulse">
@@ -175,10 +180,10 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate, onOpenEnro
                   <div>
                     <button
                       onClick={() => onOpenEnroll(plan.id)}
-                      className={`w-full block text-center py-3.5 px-4 rounded-xl text-xs font-bold uppercase tracking-wider cursor-pointer shadow-md lq-btn lq-shimmer-btn ${
+                      className={`w-full block text-center py-3.5 px-4 rounded-xl text-xs font-bold uppercase tracking-wider cursor-pointer shadow-md ${
                         isPopular
-                          ? 'bg-gradient-to-r from-[#FCB205] to-[#E5BE1D] hover:from-[#FCE253] hover:to-[#FCB205] text-slate-900 font-extrabold'
-                          : 'bg-[#032918] hover:bg-[#072C1E] active:bg-[#021a0f] text-white border border-emerald-900/40'
+                          ? 'bg-gradient-to-r from-[#FCB205] to-[#E5BE1D] text-slate-900 font-extrabold'
+                          : 'bg-[#032918] text-white border border-emerald-900/40'
                       }`}
                     >
                       Book 3-Day Free Trial

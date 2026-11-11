@@ -72,6 +72,51 @@ footer *::after {
   animation: none !important;
 }
 
+/* Remove all transitions, animations, and motion effects from user-specified sections & items:
+   - Why Families Choose Us (section, badges, buttons, cards)
+   - Noorani Qaida Course & Advanced Islamic Studies Course
+   - Comprehensive Curriculum / Our Quran & Islamic Studies Courses
+   - View All Courses, View Details, Enroll Now
+   - Our Packages button & pricing cards
+   - Trusted by 200+ Muslim Families / What Our Students & Parents Say (Reviews section)
+   - Footer (all contact, gallery, social, copyright)
+   - Academic Advisor Online (WhatsApp floating widget & chat modal)
+*/
+/* Learnquraan.co.uk Transitions & Micro-interactions (Mobile & Desktop) */
+:root {
+  --lq-ease: cubic-bezier(0.445, 0.05, 0.55, 0.95); /* ease-in-out-sine from learnquraan.co.uk AOS */
+  --lq-duration: 0.35s;
+}
+
+/* Card hover & touch transitions matching learnquraan.co.uk */
+.lq-card-hover {
+  transition: transform 0.35s var(--lq-ease), box-shadow 0.35s var(--lq-ease), border-color 0.35s var(--lq-ease) !important;
+  will-change: transform, box-shadow;
+}
+
+.lq-card-hover:hover,
+.lq-card-hover:active {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px -6px rgba(7, 44, 30, 0.12), 0 4px 8px -2px rgba(7, 44, 30, 0.06);
+}
+
+/* Button smooth transitions matching learnquraan.co.uk */
+.lq-btn {
+  transition: background-color 0.3s var(--lq-ease), transform 0.25s var(--lq-ease), box-shadow 0.3s var(--lq-ease), border-color 0.3s var(--lq-ease) !important;
+}
+
+.lq-btn:active {
+  transform: scale(0.97);
+}
+
+/* Mobile responsive smooth transitions matching learnquraan.co.uk */
+@media (max-width: 768px) {
+  .lq-card-hover:active {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px -4px rgba(7, 44, 30, 0.15);
+  }
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
